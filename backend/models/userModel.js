@@ -138,10 +138,10 @@ const userSchema = new mongoose.Schema({
       ref: "post",
     },
   ],
-  problems: [
+  questions: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "stack",
+      ref: "question",
     },
   ],
 
@@ -156,6 +156,18 @@ const userSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "project",
+    },
+  ],
+  myJobs: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "jobs",
+    },
+  ],
+  myProjects: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "projects",
     },
   ],
 

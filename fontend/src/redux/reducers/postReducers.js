@@ -104,6 +104,7 @@ export const singlePost = (state = { post: {} }, action) => {
         ...state,
         postLoad: false,
         post: action.payload,
+        success: action.payload,
       };
 
     case GET_SINGLE_POST_FAIL:
@@ -129,6 +130,7 @@ export const addReplyReducer = (state = {}, action) => {
       return {
         ...state,
         success: action.payload.success,
+        reply: action.payload.reply,
         loading: false,
       };
     case ADD_REPLY_FAIL:
@@ -150,8 +152,8 @@ export const deleteReplyReducer = (state = {}, action) => {
       };
     case DELETE_REPLY_SUCCESS:
       return {
-        ...state,
         success: action.payload.success,
+        message: action.payload.message,
         loading: false,
       };
     case DELETE_REPLY_FAIL:

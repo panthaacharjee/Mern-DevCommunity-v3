@@ -23,8 +23,16 @@ import { useSelector } from "react-redux";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import ru from "javascript-time-ago/locale/ru.json";
+import AllQuestion from "./components/Problems/AllQuestion";
+import QuestionSingle from "./components/Problems/SingleQuestion/QuestionSingle";
+import Jobs from "./components/Job/Jobs";
+import Projects from "./components/Projects/Projects";
+import Singlejob from "./components/Job/SingleJob/Singlejob";
+import Singleproject from "./components/Projects/SingleProject/Singleproject";
+
 TimeAgo.addDefaultLocale(en);
 TimeAgo.addLocale(ru);
+
 function App() {
   const { error } = useSelector((state) => state.posts);
   //Load User
@@ -49,6 +57,7 @@ function App() {
     theme: "dark",
     type: "warning",
   };
+
   useEffect(() => {
     if (
       error ===
@@ -88,6 +97,14 @@ function App() {
               }
             />
             <Route path="/posts" element={<Posts />} />
+            <Route path="/questions" element={<AllQuestion />} />
+            <Route path="/question/:id" element={<QuestionSingle />} />
+            <Route path="/jobs" element={<Jobs />} />
+            <Route path="/jobs/:keyword" element={<Jobs />} />
+            <Route path="/job/:id" element={<Singlejob />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/projects/:keyword" element={<Projects />} />
+            <Route path="/project/:id" element={<Singleproject />} />
           </Routes>
         </div>
       </div>

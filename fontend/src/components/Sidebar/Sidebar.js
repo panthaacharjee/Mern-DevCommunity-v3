@@ -15,13 +15,13 @@ const Sidebar = ({ sidebar }) => {
     <div className="sidebar-box">
       {sidebar ? (
         <>
-          <Link to="#">
+          <Link to="/jobs">
             <span>
               <HiShoppingBag />
             </span>
             <p>Jobs</p>
           </Link>
-          <Link to="#">
+          <Link to="/projects">
             <span>
               <RiProjectorLine />
             </span>
@@ -34,7 +34,7 @@ const Sidebar = ({ sidebar }) => {
             </span>
             <p>Posts</p>
           </Link>
-          <Link to="#">
+          <Link to="/questions">
             <span>
               <AiFillQuestionCircle />
             </span>
@@ -61,12 +61,12 @@ const Sidebar = ({ sidebar }) => {
         </>
       ) : (
         <>
-          <Link to="#">
+          <Link to="/jobs">
             <span>
               <HiShoppingBag />
             </span>
           </Link>
-          <Link to="#">
+          <Link to="/projects">
             <span>
               <RiProjectorLine />
             </span>
@@ -77,7 +77,7 @@ const Sidebar = ({ sidebar }) => {
               <BsFillFilePostFill />
             </span>
           </Link>
-          <Link to="#">
+          <Link to="/questions">
             <span>
               <AiFillQuestionCircle />
             </span>

@@ -4,6 +4,7 @@
   width: 100%;
   background-color: #000000d6;
   top: 30px;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -253,7 +254,6 @@
 }
 
 .reply-box {
-  margin-left: 10px;
   background-color: #000;
   color: #fff;
   padding: 10px 20px;

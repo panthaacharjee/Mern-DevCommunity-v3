@@ -6,6 +6,9 @@
   place-items: center;
   max-width: 100%;
   position: absolute;
+  z-index: 11111;
+  top: 0;
+  left: 0;
 }
 
 .loading > div {

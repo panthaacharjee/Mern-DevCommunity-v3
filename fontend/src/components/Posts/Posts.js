@@ -7,6 +7,8 @@ import CreatePost from "./CreatePost";
 import Post from "./Post";
 import { toast } from "react-toastify";
 import SinglePost from "./SinglePost";
+import { Link } from "react-router-dom";
+import MetaData from "../MetaData";
 
 const Posts = () => {
   const dispatch = useDispatch();
@@ -32,6 +34,7 @@ const Posts = () => {
 
   return (
     <>
+      <MetaData title="Posts" />
       {loading ? (
         <Loader />
       ) : (
@@ -43,17 +46,21 @@ const Posts = () => {
                 onClick={() => setCreatePostHidden(true)}
               >
                 <div>
-                  <img
-                    src={isAuthenticated && user.avatar.url.toString()}
-                    alt="avatar"
-                  />
+                  <Link to="/account">
+                    <img
+                      src={isAuthenticated && user.avatar.url.toString()}
+                      alt="avatar"
+                    />
+                  </Link>
                   <p>Whats on your mind, {isAuthenticated && user.name}?</p>
                 </div>
               </div>
             ) : null}
             <div
               style={
-                isAuthenticated ? { marginTop: "15px" } : { marginTop: "90px" }
+                isAuthenticated && user.role === "developer"
+                  ? { marginTop: "15px" }
+                  : { marginTop: "90px" }
               }
               className="all-post-container"
             >
@@ -76,7 +83,7 @@ const Posts = () => {
               setSinglePostHidden={setSinglePostHidden}
             />
           )}
-          {singlePostHidden === true && (
+          {singlePostHidden && (
             <SinglePost
               setSinglePostHidden={setSinglePostHidden}
               postId={postId}

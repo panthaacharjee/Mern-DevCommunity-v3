@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import {
   addReply,
   deleteComment,
+  getAllPost,
+  getSinglePost,
   likeAndUnlikeComment,
 } from "../../redux/actions/postActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,11 +11,13 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { FcLike } from "react-icons/fc";
 import Reply from "./Reply";
 import ReactTimeAgos from "../CustomComponent/ReactTimeAgos";
+import { toast } from "react-toastify";
 
 const Comment = ({ val, setSinglePostHidden, postId }) => {
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector((state) => state.user);
-  const { success } = useSelector((state) => state.createReply);
+  const { loading, success } = useSelector((state) => state.createReply);
+  const { post } = useSelector((state) => state.post.post);
 
   //Handle Comment Like and Comment
   const [commentLike, setCommentLike] = useState(val.likes.length);
@@ -31,29 +35,19 @@ const Comment = ({ val, setSinglePostHidden, postId }) => {
   };
 
   //Handle Reply Comment
-  const [allReply, setAllReply] = useState([...val.replies]);
   const [allReplyShow, setAllReplyShow] = useState(false);
 
   const [replyShow, setReplyShow] = useState(false);
-  const [reply, setReply] = useState("");
+  const [replyText, setReplyText] = useState();
+
   const handleReply = () => {
     const myForm = new FormData();
-    myForm.set("reply", reply);
+    myForm.set("reply", replyText);
     dispatch(addReply(myForm, val._id));
-    const replyData = {
-      reply: reply,
-      user: {
-        avatar: {
-          url: isAuthenticated && user.avatar.url,
-        },
-        name: user.name,
-        _id: isAuthenticated && user._id,
-      },
-      createdAt: Date.now(),
-    };
-    let Arr = [replyData, ...allReply];
-    setAllReply(Arr);
-    setReplyShow(false);
+  };
+  const deleteCommentHandle = () => {
+    dispatch(deleteComment(val._id));
+    dispatch(getSinglePost(post._id));
   };
 
   useEffect(() => {
@@ -62,13 +56,10 @@ const Comment = ({ val, setSinglePostHidden, postId }) => {
         setLike(false);
       }
     }
-
-    if (!success) {
-      let Arr = [...val.replies];
-      setAllReply(Arr);
+    if (success === true && loading === true) {
+      dispatch(getSinglePost(post._id));
     }
-    setReply("");
-  }, [user, success]);
+  }, [user, success, loading, getSinglePost]);
 
   return (
     <>
@@ -79,10 +70,12 @@ const Comment = ({ val, setSinglePostHidden, postId }) => {
             <div>
               <p>{val.user && val.user.name}</p>
               {isAuthenticated && user._id === val.user._id ? (
-                <span onClick={() => dispatch(deleteComment(val._id))}>
+                <span onClick={deleteCommentHandle}>
                   <AiOutlineDelete />
                 </span>
-              ) : null}
+              ) : (
+                <p style={{ padding: "17px 0px" }}></p>
+              )}
             </div>
             <p
               style={{
@@ -125,39 +118,37 @@ const Comment = ({ val, setSinglePostHidden, postId }) => {
               <input
                 type="text"
                 placeholder="write your reply..."
-                onChange={(e) => setReply(e.target.value)}
+                onChange={(e) => setReplyText(e.target.value)}
               />
               <button onClick={handleReply}>Reply</button>
             </div>
           </div>
         )}
-
-        {allReply.length > 0 &&
+        {val.replies.length > 0 &&
           (allReplyShow ? (
             <a href="#" onClick={() => setAllReplyShow(false)}>
-              hide replies ({allReply.length})
+              hide replies ({val.replies.length})
             </a>
           ) : (
             <a href="#" onClick={() => setAllReplyShow(true)}>
-              view replies ({allReply.length})
+              view replies ({val.replies.length})
             </a>
           ))}
 
-        {allReplyShow &&
-          allReply.map((reply, ind) => {
-            return (
-              <Reply
-                key={ind}
-                reply={reply}
-                commentId={val._id}
-                setSinglePostHidden={setSinglePostHidden}
-                postId={postId}
-                allReply={allReply}
-                setAllReply={setAllReply}
-                ind={ind}
-              />
-            );
-          })}
+        {allReplyShow
+          ? val.replies.length > 0 &&
+            val.replies.map((reply, ind) => {
+              return (
+                <Reply
+                  key={ind}
+                  reply={reply}
+                  commentId={val._id}
+                  setSinglePostHidden={setSinglePostHidden}
+                  postId={postId}
+                />
+              );
+            })
+          : ""}
       </div>
     </>
   );

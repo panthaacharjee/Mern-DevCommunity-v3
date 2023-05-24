@@ -1,5 +1,5 @@
 .create-post {
-  width: 40%;
+  width: 50%;
   margin: 0px auto;
   margin-top: 80px !important;
   background-color: #fff;
@@ -10,10 +10,15 @@
   display: flex;
   align-items: center;
 }
-.create-post > div > img {
+.create-post > div > a {
+  display: flex;
+  align-items: center;
+}
+.create-post > div > a > img {
   height: 50px;
   width: 50px;
   border-radius: 50%;
+  display: flex;
 }
 .create-post > div > p {
   margin-left: 10px;
@@ -24,8 +29,11 @@
 
 /* Post Css */
 .all-post-container {
-  width: 40%;
+  width: 50%;
   margin: 0px auto;
+}
+.margin {
+  margin-top: 80px;
 }
 
 .post-conatiner {

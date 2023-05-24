@@ -107,12 +107,14 @@ const Profile = () => {
             <div>
               <h4>{user.name}</h4>
               {user.title ? <p>{user.title}</p> : <p>Edit your tile</p>}
-              <p>
-                <span>
-                  <CgMail />
-                </span>
-                {user.email}
-              </p>
+              {user.role === "developer" && (
+                <p>
+                  <span>
+                    <CgMail />
+                  </span>
+                  {user.email}
+                </p>
+              )}
               <div style={{ display: "flex" }}>
                 <p>
                   <span>
@@ -183,74 +185,58 @@ const Profile = () => {
         >
           <BannerUpdate setBannerUpdate={setBannerUpdate} />
         </div>
-        {user.role === "developer" ? (
-          <div className="tab-container container">
-            <div className="tab-button">
-              {tabArrayClient.map((val, ind) => {
-                return (
-                  <button
-                    key={ind}
-                    onClick={() => click(ind)}
-                    className={tab === ind ? "tab-btn active" : "tab-btn"}
-                  >
-                    <span>{val.icon}</span>
-                    <p>{val.name}</p>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div
-              className={
-                tab === 0 ? "tab-content active-content" : "tab-content"
-              }
-            >
-              <About />
-            </div>
-            <div
-              className={
-                tab === 1 ? "tab-content active-content" : "tab-content"
-              }
-            >
-              <Timeline />
-            </div>
-            <div
-              className={
-                tab === 2 ? "tab-content active-content" : "tab-content"
-              }
-            >
-              <Myjob />
-            </div>
-            <div
-              className={
-                tab === 3 ? "tab-content active-content" : "tab-content"
-              }
-            >
-              <Myprojects />
-            </div>
-            <div
-              className={
-                tab === 4 ? "tab-content active-content" : "tab-content"
-              }
-            >
-              <Mypost />
-            </div>
-            <div
-              className={
-                tab === 5 ? "tab-content active-content" : "tab-content"
-              }
-            >
-              <Myproblems />
-            </div>
-            <div
-              className={
-                tab === 6 ? "tab-content active-content" : "tab-content"
-              }
-            >
-              <BillingandPayments />
-            </div>
+        <div className="tab-container container">
+          <div className="tab-button">
+            {tabArrayClient.map((val, ind) => {
+              return (
+                <button
+                  key={ind}
+                  onClick={() => click(ind)}
+                  className={tab === ind ? "tab-btn active" : "tab-btn"}
+                >
+                  <span>{val.icon}</span>
+                  <p>{val.name}</p>
+                </button>
+              );
+            })}
           </div>
-        ) : null}
+
+          <div
+            className={tab === 0 ? "tab-content active-content" : "tab-content"}
+          >
+            <About />
+          </div>
+          <div
+            className={tab === 1 ? "tab-content active-content" : "tab-content"}
+          >
+            <Timeline />
+          </div>
+          <div
+            className={tab === 2 ? "tab-content active-content" : "tab-content"}
+          >
+            <Myjob />
+          </div>
+          <div
+            className={tab === 3 ? "tab-content active-content" : "tab-content"}
+          >
+            <Myprojects />
+          </div>
+          <div
+            className={tab === 4 ? "tab-content active-content" : "tab-content"}
+          >
+            <Mypost />
+          </div>
+          <div
+            className={tab === 5 ? "tab-content active-content" : "tab-content"}
+          >
+            <Myproblems />
+          </div>
+          <div
+            className={tab === 6 ? "tab-content active-content" : "tab-content"}
+          >
+            <BillingandPayments />
+          </div>
+        </div>
       </div>
     </>
   );

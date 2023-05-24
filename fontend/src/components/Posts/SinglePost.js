@@ -5,14 +5,19 @@ import { RxCross2 } from "react-icons/rx";
 import Loader from "../Loader/Loader";
 import ImageSlides from "../CustomComponent/ImageSlides";
 import { AiFillCamera, AiFillLike, AiOutlineDelete } from "react-icons/ai";
-import { createComment } from "../../redux/actions/postActions";
+import {
+  createComment,
+  getAllPost,
+  getSinglePost,
+} from "../../redux/actions/postActions";
 import Comment from "./Comment";
 import ReactTimeAgos from "../CustomComponent/ReactTimeAgos";
+import { toast } from "react-toastify";
 
 const SinglePost = ({ setSinglePostHidden, postId }) => {
   const dispatch = useDispatch();
   const { post } = useSelector((state) => state.post.post);
-  const { postLoad } = useSelector((state) => state.post);
+  const { postLoad, success, error } = useSelector((state) => state.post);
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
   // Like And Unlike Post
@@ -71,7 +76,17 @@ const SinglePost = ({ setSinglePostHidden, postId }) => {
     if (commentImage) {
       alert("Selected");
     }
-  }, [commentImage, isAuthenticated]);
+    if (success && postLoad === false) {
+      toast(success.message);
+    }
+    if (success === true && postLoad === true) {
+      dispatch(getAllPost());
+      dispatch(getSinglePost(post._id));
+    }
+    if (error) {
+      toast(error);
+    }
+  }, [isAuthenticated, success, toast, postLoad, getAllPost, getSinglePost]);
   return (
     <div className="single-post-container">
       {postLoad ? (
@@ -104,7 +119,6 @@ const SinglePost = ({ setSinglePostHidden, postId }) => {
               <ImageSlides images={post.images} />
             </div>
             <div className="comments-container">
-              {post.comments.length > 5 && <p>view more comments</p>}
               {post.comments.map((val, ind) => {
                 return (
                   <Comment

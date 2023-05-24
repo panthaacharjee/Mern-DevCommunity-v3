@@ -339,9 +339,11 @@ exports.addReply = catchAsyncError(async (req, res, next) => {
   // }
 
   await comment.save();
+  let newComment = await Comment.findById(req.params.id);
   res.status(200).json({
     success: true,
     message: "Added Successfully",
+    reply: newComment.replies[newComment.replies.length - 1],
   });
 });
 

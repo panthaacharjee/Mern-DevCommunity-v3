@@ -49,13 +49,18 @@ const Post = ({ val, setSinglePostHidden, setPostId }) => {
   }, [isAuthenticated, user, postLoad]);
   return (
     <div className="post-conatiner">
-      <div className="post-header-box">
-        <img src={val.owner.avatar.url && val.owner.avatar.url} alt="avatar" />
-        <div>
-          <p>{val.owner.name}</p>
-          <span>
-            <ReactTimeAgos date={val.createdAt} />
-          </span>
+      <div>
+        <div className="post-header-box">
+          <img
+            src={val.owner.avatar.url && val.owner.avatar.url}
+            alt="avatar"
+          />
+          <div>
+            <p>{val.owner.name}</p>
+            <span>
+              <ReactTimeAgos date={val.createdAt} />
+            </span>
+          </div>
         </div>
       </div>
       <div className="post-middle-box">

@@ -15,6 +15,7 @@ const SkillUpdate = ({ setSkillUpdate }) => {
   const { isUpdated, error, loading } = useSelector((state) => state.profile);
 
   const [skill, setSkill] = useState();
+  console.log(skill);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,11 +24,9 @@ const SkillUpdate = ({ setSkillUpdate }) => {
     myForm.set("skill", skill);
 
     dispatch(updateSkill(myForm));
+    setSkill();
   };
   useEffect(() => {
-    if (user) {
-      setSkill(user.skill);
-    }
     if (error) {
       return toast(error);
     }
@@ -36,7 +35,7 @@ const SkillUpdate = ({ setSkillUpdate }) => {
       dispatch({ type: UPDATE_SKILL_RESET });
       history("/account");
     }
-  }, [user, error, isUpdated, dispatch]);
+  }, [error, isUpdated, dispatch]);
 
   return (
     <>

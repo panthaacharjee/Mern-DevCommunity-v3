@@ -4,15 +4,14 @@ import MetaData from "../MetaData";
 import Loader from "../Loader/Loader";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { forgotPassword } from "../../redux/actions/userActions";
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
-  const { loading, message, success, error } = useSelector(
+  const { loading, message, error } = useSelector(
     (state) => state.forgotPassword
   );
-  const history = useNavigate();
+  console.log(message);
   const {
     register,
     handleSubmit,
@@ -29,12 +28,12 @@ const ForgotPassword = () => {
       if (error) {
         return toast(error);
       }
-      if (success) {
+      if (message) {
         return toast(message);
       }
     }
     auth();
-  }, [error, history, message]);
+  }, [error, message]);
   return (
     <>
       <MetaData title={"Forgot Password"} />

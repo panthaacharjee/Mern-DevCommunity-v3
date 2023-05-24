@@ -43,7 +43,24 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("Please enter email & password", 400));
   }
 
-  const user = await User.findOne({ email }).select("+password");
+  const user = await User.findOne({ email })
+    .select("+password")
+    .populate("posts")
+    .populate({
+      path: "posts",
+      populate: {
+        path: "owner",
+        options: { strictPopulate: false },
+      },
+    })
+    .populate("questions")
+    .populate({
+      path: "questions",
+      populate: {
+        path: "owner",
+        options: { strictPopulate: false },
+      },
+    });
   if (!user) {
     return next(new ErrorHandler("Invalid email and password", 401));
   }
@@ -110,7 +127,23 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {
   const user = await User.findOne({
     resetPasswordToken,
     resetPasswordExpire: { $gt: Date.now() },
-  });
+  })
+    .populate("posts")
+    .populate({
+      path: "posts",
+      populate: {
+        path: "owner",
+        options: { strictPopulate: false },
+      },
+    })
+    .populate("questions")
+    .populate({
+      path: "questions",
+      populate: {
+        path: "owner",
+        options: { strictPopulate: false },
+      },
+    });
 
   if (!user) {
     return next(
@@ -135,7 +168,23 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {
 
 //Get User Details
 exports.getUserDetails = catchAsyncError(async (req, res, next) => {
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.user.id)
+    .populate("posts")
+    .populate({
+      path: "posts",
+      populate: {
+        path: "owner",
+        options: { strictPopulate: false },
+      },
+    })
+    .populate("questions")
+    .populate({
+      path: "questions",
+      populate: {
+        path: "owner",
+        options: { strictPopulate: false },
+      },
+    });
 
   res.status(200).json({
     success: true,
@@ -145,7 +194,24 @@ exports.getUserDetails = catchAsyncError(async (req, res, next) => {
 
 //Update User Password
 exports.updatePassword = catchAsyncError(async (req, res, next) => {
-  const user = await User.findById(req.user.id).select("+password");
+  const user = await User.findById(req.user.id)
+    .select("+password")
+    .populate("posts")
+    .populate({
+      path: "posts",
+      populate: {
+        path: "owner",
+        options: { strictPopulate: false },
+      },
+    })
+    .populate("questions")
+    .populate({
+      path: "questions",
+      populate: {
+        path: "owner",
+        options: { strictPopulate: false },
+      },
+    });
   const isPassowrdMatched = await user.comparePassword(req.body.oldPassword);
 
   if (!isPassowrdMatched) {

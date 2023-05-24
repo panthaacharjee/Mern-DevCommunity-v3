@@ -14,6 +14,13 @@ import {
   likeAndUnlikeReducer,
   singlePost,
 } from "./reducers/postReducers";
+import {
+  getQuestionsReducers,
+  likeAndUnlikeAnswerReducer,
+  questionReducer,
+} from "./reducers/stackReducers";
+import { jobReducer, jobsReducer } from "./reducers/jobReducers";
+import { projectReducer, projectsReducer } from "./reducers/projectReducers";
 
 const reducer = combineReducers({
   user: userReducer,
@@ -25,6 +32,13 @@ const reducer = combineReducers({
   likeAndUnlikeComment: likeAndUnlikeCommentReducer,
   createReply: addReplyReducer,
   deleteReply: deleteReplyReducer,
+  questions: getQuestionsReducers,
+  question: questionReducer,
+  answer: likeAndUnlikeAnswerReducer,
+  jobs: jobsReducer,
+  job: jobReducer,
+  projects: projectsReducer,
+  project: projectReducer,
 });
 const middleware = [thunk];
 
